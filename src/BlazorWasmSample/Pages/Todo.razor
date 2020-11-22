@@ -1,0 +1,58 @@
+@page "/todo"
+
+<h1>Todo</h1>
+
+<table>
+    <tr>
+        <td colspan="4">
+            <input style="width: 100%" placeholder="What needs to be done?" @bind="newItem" @onkeydown="@Enter" />
+        </td>
+        <td>
+            <button @onclick="AddItem">add</button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <ul>
+                @foreach (var item in todosForDisplay)
+                {
+                    <li>
+                        <input type="checkbox" @bind="item.IsDone" />
+                        <input @bind="item.Content" style="color: @GetTextStyles(item).foreColor; text-decoration: @GetTextStyles(item).decoration"/>
+                    </li>
+                }
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @allTodos.Count(x => !x.IsDone) items left
+        </td>
+        <td>
+            <button @onclick="ShowAll">All</button>
+        </td>
+        <td>
+            <button @onclick="ShowActive">Active</button>
+        </td>
+        <td>
+            <button @onclick="ShowCompleted">Completed</button>
+        </td>
+        <td>
+            <button @onclick="ClearCompleted" style="display: @GetDisplay()">Clear completed</button>
+        </td>
+    </tr>
+</table>
+
+@* @code 
+{
+    private List<TodoItem> todos = new List<TodoItem>();
+    private string newItem;
+
+    private void AddItem() {
+        if (!string.IsNullOrWhiteSpace(newItem))
+        {
+            todos.Add(new TodoItem() { Content = newItem, });
+            newItem = string.Empty;
+        }
+    }
+} *@
