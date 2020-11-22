@@ -7,6 +7,7 @@ $ dotnet new blazorwasm -o BlazorWasmSample
 
 ## RUN
 ```
+$ cd src/BlazorWasmSample
 $ dotnet run
 ```
 
