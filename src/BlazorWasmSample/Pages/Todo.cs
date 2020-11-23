@@ -30,7 +30,7 @@ namespace BlazorWasmSample.Pages
             if (!string.IsNullOrWhiteSpace(newItem))
             {
                 allTodos.Add(new TodoItem() { Content = newItem, });
-                this.ShowTodo(currentState);
+                this.ShowTodo();
                 newItem = string.Empty;
             }
         }
@@ -40,7 +40,7 @@ namespace BlazorWasmSample.Pages
         /// </summary>
         private void ShowAll() {
             currentState = State.All;
-            this.ShowTodo(currentState);
+            this.ShowTodo();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace BlazorWasmSample.Pages
         /// </summary>
         private void ShowActive() {
             currentState = State.Active;
-            this.ShowTodo(currentState);
+            this.ShowTodo();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace BlazorWasmSample.Pages
         /// </summary>
         private void ShowCompleted() {
             currentState = State.Completed;
-            this.ShowTodo(currentState);
+            this.ShowTodo();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace BlazorWasmSample.Pages
         {
             var completedTodos = allTodos.Where(x => x.IsDone);
             allTodos = allTodos.Except(completedTodos).ToList();
-            this.ShowTodo(currentState);
+            this.ShowTodo();
         }
 
         /// <summary>
@@ -91,10 +91,9 @@ namespace BlazorWasmSample.Pages
         /// <summary>
         /// Todoアイテムを表示
         /// </summary>
-        /// <param name="state">状態</param>
-        private void ShowTodo(State state)
+        private void ShowTodo()
         {
-            switch (state)
+            switch (this.currentState)
             {
                 case State.All:
                     todosForDisplay = allTodos;
