@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorWasmSample.Pages
@@ -113,12 +114,22 @@ namespace BlazorWasmSample.Pages
         /// <param name="e">イベントデータ</param>
         private void Enter(KeyboardEventArgs e)
         {
-            Console.WriteLine($"KeyboardEventArgs : Code[{e.Code}] Key[{e.Key}]");
+            Console.WriteLine($"KeyboardEventArgs : Code[{e.Code}], Key[{e.Key}], newItem[{newItem}]");
 
             if (e.Key == "Enter")
             {
                 this.AddItem();
             }
+        }
+
+        /// <summary>
+        /// 入力イベント
+        /// </summary>
+        /// <param name="e">イベントデータ</param>
+        private void OnInput(ChangeEventArgs e)
+        {
+            newItem = e.Value as string;
+            Console.WriteLine($"OnInput: \"{newItem}\"");
         }
     }
 }

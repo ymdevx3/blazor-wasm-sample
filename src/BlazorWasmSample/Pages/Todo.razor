@@ -5,7 +5,8 @@
 <table>
     <tr>
         <td colspan="4">
-            <input style="width: 100%" placeholder="What needs to be done?" @bind="newItem" @onkeydown="@Enter" />
+            <input style="width: 100%" placeholder="What needs to be done?"
+                   @bind="newItem" @onkeydown="@Enter" @oninput="OnInput" />
         </td>
         <td>
             <button @onclick="AddItem">add</button>
