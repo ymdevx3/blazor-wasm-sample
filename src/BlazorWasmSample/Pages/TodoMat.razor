@@ -1,0 +1,36 @@
+@page "/todomat"
+
+<style>
+    input.noborder {
+        outline: 0;
+        border-width: 0 0 0px;
+    }
+</style>
+
+<h1>Todo</h1>
+
+<div>
+    <MatTextField @bind-Value="newItem" Label="What needs to be done?"
+                  OnKeyDown="@Enter" OnInput="@OnInput"
+                  Style="width: 500px"></MatTextField>
+    <MatButton OnClick="@AddItem" Outlined="true">add</MatButton>
+</div>
+<div>
+    <MatList Style="width: 500px">
+        @foreach (var item in todosForDisplay)
+        {
+            <MatListItem>
+                <MatCheckbox @bind-Value="item.IsDone"></MatCheckbox>
+                <input class="noborder" @bind="item.Content" style="color: @GetTextStyles(item).foreColor; text-decoration: @GetTextStyles(item).decoration;"/>
+            </MatListItem>
+            <MatListDivider></MatListDivider>
+        }
+    </MatList>
+</div>
+<div>
+    @allTodos.Count(x => !x.IsDone) items left
+    <MatButton OnClick="@ShowAll" Outlined="true">All</MatButton>
+    <MatButton OnClick="@ShowActive" Outlined="true">Active</MatButton>
+    <MatButton OnClick="@ShowCompleted" Outlined="true">Completed</MatButton>
+    <MatButton OnClick="@ClearCompleted" Outlined="true" Disabled="@GetClearDisabled()">Clear completed</MatButton>
+</div>
