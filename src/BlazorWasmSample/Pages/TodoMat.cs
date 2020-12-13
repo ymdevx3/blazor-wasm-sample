@@ -136,5 +136,15 @@ namespace BlazorWasmSample.Pages
             newItem = e.Value as string;
             Console.WriteLine($"OnInput: \"{newItem}\"");
         }
+
+        /// <summary>
+        /// Todo完了アイテムCSSクラス名を取得
+        /// </summary>
+        /// <param name="isDone">完了フラグ</param>
+        /// <returns>クラス名</returns>
+        private string GetCompletedTodoItemCssClass(bool isDone)
+        {
+            return isDone ? "completed-todo-item" : "";
+        }
     }
 }
