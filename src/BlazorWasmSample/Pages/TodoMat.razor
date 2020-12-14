@@ -20,8 +20,8 @@
         @foreach (var item in todosForDisplay)
         {
             <MatListItem Style="padding: 0;">
-                <MatStringField Style="width: 100%; position: absolute; padding-left: 50px;" InputClass="@GetCompletedTodoItemCssClass(item.IsDone)" @bind-Value="item.Content"></MatStringField>
-                <MatCheckbox @bind-Value="item.IsDone"></MatCheckbox>
+                <MatCheckbox Style="z-index: 1;" @bind-Value="item.IsDone"></MatCheckbox>
+                <MatStringField Style="z-index: 0; width: 100%; position: absolute; padding-left: 50px; " InputClass="@GetCompletedTodoItemCssClass(item.IsDone)" @bind-Value="item.Content"></MatStringField>
             </MatListItem>
         }
     </MatList>
