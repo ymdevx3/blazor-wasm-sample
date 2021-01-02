@@ -23,7 +23,21 @@ namespace BlazorWasmSample.Pages
             Active,
             Completed,
         }
-
+        // newItemのチェック状態
+        private bool allChecked
+        {
+            get
+            {
+                // 未完了アイテムがない場合にチェックON、一つでもあればチェックOFF
+                return !allTodos.Any(x => !x.IsDone);
+            }
+            set
+            {
+                // チェック状態に合わせてTodoアイテムすべてのチェック状態を変更
+                allTodos.ForEach(x => x.IsDone = value);
+            }
+        }
+ 
         /// <summary>
         /// アイテムを追加
         /// </summary>
@@ -69,30 +83,43 @@ namespace BlazorWasmSample.Pages
             allTodos = allTodos.Except(completedTodos).ToList();
             this.ShowTodo();
         }
-
-        /// <summary>
-        /// ClearCompletedボタン表示スタイルを取得
-        /// </summary>
-        /// <returns>表示スタイル [inline-block / none]</returns>
-        private string GetDisplay()
-        {
-            return allTodos.Any(x => x.IsDone) ? "inline-block" : "none";
-        }
         
-        private bool GetClearDisabled()
+        /// <summary>
+        /// Todoアイテムが存在するかどうか
+        /// </summary>
+        /// <returns></returns>
+        private bool TodoItemExists()
         {
-            return !allTodos.Any(x => x.IsDone);
+            return allTodos.Any();
         }
 
         /// <summary>
-        /// Todoアイテムのテキストスタイルを取得
+        /// 完了済みのTodoアイテムが存在するかどうか
         /// </summary>
-        /// <param name="item">Todoアイテム</param>
-        /// <returns>文字色と取消線を付けるかどうかのセット</returns>
-        private (string foreColor, string decoration) GetTextStyles(TodoItem item)
+        /// <returns></returns>
+        private bool CompletedTodoItemExists()
         {
-            return item.IsDone ? ("lightgray", "line-through") : ("black", "none");
+            return allTodos.Any(x => x.IsDone);
         }
+
+        // /// <summary>
+        // /// ClearCompletedボタン表示スタイルを取得
+        // /// </summary>
+        // /// <returns>表示スタイル [inline-block / none]</returns>
+        // private string GetDisplay()
+        // {
+        //     return allTodos.Any(x => x.IsDone) ? "inline-block" : "none";
+        // }
+
+        // /// <summary>
+        // /// Todoアイテムのテキストスタイルを取得
+        // /// </summary>
+        // /// <param name="item">Todoアイテム</param>
+        // /// <returns>文字色と取消線を付けるかどうかのセット</returns>
+        // private (string foreColor, string decoration) GetTextStyles(TodoItem item)
+        // {
+        //     return item.IsDone ? ("lightgray", "line-through") : ("black", "none");
+        // }
 
         /// <summary>
         /// Todoアイテムを表示

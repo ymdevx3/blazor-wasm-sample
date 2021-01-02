@@ -5,31 +5,36 @@
         text-decoration: line-through;
         color: lightgray !important;
     }
+    .new-item-text-field > label.mat-text-field > span {
+        margin-left: 30px;
+    }
 </style>
 
 <h1>Todo</h1>
 
-<div>
+<div class="new-item-text-field" style="display: flex; position: relative; align-items: center;">
+    <MatCheckbox Style="z-index: 1; position: absolute; left: 0;" @bind-Value="allChecked" Disabled="@(!TodoItemExists())"></MatCheckbox> @* ValueChanged="@AllCheckValueChanged()" *@
     <MatTextField @bind-Value="newItem" Label="What needs to be done?"
-                  OnKeyDown="@Enter" OnInput="@OnInput"
-                  Style="width: 500px"></MatTextField>
+                OnKeyDown="@Enter" OnInput="@OnInput"
+                Style="z-index: 0; width: 500px; padding-left: 50px;"></MatTextField>
     <MatButton OnClick="@AddItem" Outlined="true">add</MatButton>
 </div>
+<div style="clear: both"></div>
 <div>
     <MatList Style="width: 500px">
         @foreach (var item in todosForDisplay)
         {
             <MatListItem Style="padding: 0;">
                 <MatCheckbox Style="z-index: 1;" @bind-Value="item.IsDone"></MatCheckbox>
-                <MatStringField Style="z-index: 0; width: 100%; position: absolute; padding-left: 50px; " InputClass="@GetCompletedTodoItemCssClass(item.IsDone)" @bind-Value="item.Content"></MatStringField>
+                <MatStringField Style="z-index: 0; width: 100%; position: absolute; padding-left: 50px;" InputClass="@GetCompletedTodoItemCssClass(item.IsDone)" @bind-Value="item.Content"></MatStringField>
             </MatListItem>
         }
     </MatList>
 </div>
 <div>
     @allTodos.Count(x => !x.IsDone) items left
-    <MatButton OnClick="@ShowAll" Outlined="true">All</MatButton>
+    <MatButton OnClick="@ShowAll" Outlined="true" Style="margin-left: 20px">All</MatButton>
     <MatButton OnClick="@ShowActive" Outlined="true">Active</MatButton>
-    <MatButton OnClick="@ShowCompleted" Outlined="true">Completed</MatButton>
-    <MatButton OnClick="@ClearCompleted" Outlined="true" Disabled="@GetClearDisabled()">Clear completed</MatButton>
+    <MatButton OnClick="@ShowCompleted" Outlined="true" Style="margin-right: 20px">Completed</MatButton>
+    <MatButton OnClick="@ClearCompleted" Outlined="true" Disabled="@(!CompletedTodoItemExists())">Clear completed</MatButton>
 </div>
